@@ -16,7 +16,8 @@
         android:layout_marginBottom="8dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="@string/name"
+        android:text=""
+        android:hint="Name"
         android:autofillHints="yes"
         android:importantForAutofill="no"
         app:layout_constraintBottom_toTopOf="@+id/add"
@@ -43,5 +44,16 @@
         android:layout_marginBottom="80dp"
         android:text="Menu"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/names"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="176dp"
+        android:layout_marginLeft="176dp"
+        android:layout_marginBottom="200dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/name"
         app:layout_constraintStart_toStartOf="parent" />
 </android.support.constraint.ConstraintLayout>
