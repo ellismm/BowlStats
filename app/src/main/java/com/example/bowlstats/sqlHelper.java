@@ -32,7 +32,7 @@ public class sqlHelper extends SQLiteOpenHelper {
     private static final String Game1 = "Game1";
     private static final String Game2 = "Game2";
     private static final String Game3 = "Game3";
-    private static final String gamesToday = "Day Games";
+    private static final String gamesToday = "Day_Games";
     private static final String totalGames = "Total_Games";
     private static final String dayAverage = "Daily_Average";
     private static final String totalAverage = "Total_Average";
@@ -86,29 +86,11 @@ public class sqlHelper extends SQLiteOpenHelper {
                     Game1 + " SMALLINT(300), " + Game2 + " SMALLINT(300), " + Game3 + " SMALLINT(300), " +
                     gamesToday + " SMALLINT(3), " + totalGames + " SMALLINT, " + dayAverage + " FLOAT(300.3), " +
                     totalAverage + " FLOAT, " + highScore + " SMALLINT(300), " + lowScore + " SMALLINT(300), " +
-                    dayPoints + " SMALLINT(900), " + totalPoints +  " BIGINT " + ") ";
+                    dayPoints + " SMALLINT(900), " + totalPoints +  " BIGINT ) ";
             db.execSQL(createTable);
             return true;
         }
         return false;
-//        try {
-//            Cursor cursor = db.rawQuery(" SELECT DISTINCT tbl_name FROM sqlite_master WHERE tbl_name = " +
-//                    NAME_DB + "", null);
-//            if(cursor.getCount() != 1) {
-//                String createTable = " CREATE TABLE IF NOT EXISTS " + NAME_DB + "(" + theDate + " DATE, " +
-//                        Game1 + " SMALLINT(300), " + Game2 + " SMALLINT(300), " + Game3 + " SMALLINT(300), " +
-//                        gamesToday + " SMALLINT(3), " + totalGames + " SMALLINT, " + dayAverage + " FLOAT(300.3), " +
-//                        totalAverage + " FLOAT, " + highScore + " SMALLINT(300), " + lowScore + " SMALLINT(300), " +
-//                        totalPoints + " BIGINT " + ") ";
-//                db.execSQL(createTable);
-//                return true;
-//            }
-//            return false;
-//        }
-//        catch (Exception e) {
-//            return false;
-//        }
-
     }
 
     /**
@@ -139,8 +121,13 @@ public class sqlHelper extends SQLiteOpenHelper {
         return player;
     }
 
-    // Record new scores and updates stats
-    public void recordScore(String name, int score) {
+    /**
+     * record new scores and updates stats
+     * @param name
+     * @param score
+     * @return
+     */
+    public boolean recordScore(String name, int score) {
 
         // Name of the specified persons database;
         NAME_DB = name;
@@ -149,6 +136,7 @@ public class sqlHelper extends SQLiteOpenHelper {
         int tempInt, tempInt2, tempInt3;
         String tempDate;
         Float tempFloat, tempFloat2;
+        long result;
 
         // Initializing cursors
         Cursor cursor1, cursor2;
@@ -162,8 +150,9 @@ public class sqlHelper extends SQLiteOpenHelper {
         tempDate = formatDate.format(date);
         System.out.println(tempDate);
 
-        cursor2 = db.rawQuery("SELECT * FROM " + NAME_DB + " WHERE " + theDate + " = " +
-                tempDate, null);
+        cursor2 = db.rawQuery("SELECT * FROM " + NAME_DB + " WHERE " + theDate + " = '" +
+                tempDate + "'", null);
+        System.out.println("number of rows in the table: " + cursor2.getCount());
         // If this is the first game of the day
         if(cursor2.getCount() == 0) {
             values.put(theDate, tempDate);
@@ -212,16 +201,114 @@ public class sqlHelper extends SQLiteOpenHelper {
                 values.put(lowScore, tempInt < score ? tempInt : score);
                 values.put(highScore, tempInt2 > score ? tempInt2 : score);
             }
+
+            // insert the new row in the table
+            Log.d(TAG, "update Stats: updating the stats after game 1 for the table " + NAME_DB);
+            result = db.insert(NAME_DB, null, values);
+            if(result == -1)
+                return false;
         }
 
-        // If this is the 2nd or 3rd game
+        // If this is the not the first game of the Day
         else if (cursor2.getCount() > 0) {
+            // Initializing temp variables
+            int intTemp1, intTemp2, intTemp3;
 
+            // Get all the rows of from the table and move to the last row
+            cursor1 = db.rawQuery(" SELECT * FROM " + NAME_DB, null);
+            cursor1.moveToLast();
+
+            // Determine whether to update game 2 or game 3
+            intTemp1 = cursor1.getInt(cursor1.getColumnIndex(Game2));
+            intTemp2 = cursor1.getInt(cursor1.getColumnIndex(Game3));
+            // if the 2nd game
+            if(intTemp1 == -1) {
+                values.put(Game2, score);
+                Log.d(TAG, "update Stats: updating the stats after game 2 for the table " + NAME_DB);
+
+            }
+            // If the 3rd game
+            else if(intTemp2 == -1) {
+                values.put(Game3, score);
+                Log.d(TAG, "update Stats: updating the stats after game 3 for the table " + NAME_DB);
+            }
+            else if(intTemp2 > -1) {
+                return false;
+            }
+
+            // Update the total games
+            intTemp1 = cursor1.getInt(cursor1.getColumnIndex(totalGames));
+            intTemp1++;
+            values.put(totalGames, intTemp1);
+
+            // Update the total points
+            intTemp2 = cursor1.getInt(cursor1.getColumnIndex(totalPoints));
+            intTemp2 += score;
+            values.put(totalPoints, intTemp2);
+
+            // Update the total Average
+            values.put(totalAverage, (float) intTemp2 / (float) intTemp1);
+
+            // Update the # of games for the day
+            intTemp1 = cursor1.getInt(cursor1.getColumnIndex(gamesToday));
+            intTemp1++;;
+            values.put(gamesToday, intTemp1);
+
+            // Update the # of points for the day
+            intTemp2 = cursor1.getInt(cursor1.getColumnIndex(dayPoints));
+            intTemp2 += score;
+            values.put(dayPoints, intTemp2);
+
+            // Update the average for the day
+            values.put(dayAverage, (float) intTemp2 / (float) intTemp1);
+
+            // Update the low and high score
+            intTemp1 = cursor1.getInt(cursor1.getColumnIndex(lowScore));
+            intTemp2 = cursor1.getInt(cursor1.getColumnIndex((highScore)));
+            values.put(lowScore, intTemp1 < score ? intTemp1 : score);
+            values.put(highScore, intTemp2 > score? intTemp2 : score);
+
+            // update the results in the table
+            result = db.update(NAME_DB, values, theDate + " = '"  +
+                    tempDate + "'", null);
+            if(result == -1)
+                return false;
         }
-//        values.put(theDate, )
+        return true;
     }
 
+    /**
+     * Get the stats for the specified player
+     * @param name
+     */
+    public HashMap<String, String> getStats(String name) {
+        // List to add all the stats
+        HashMap<String, String> stats = new HashMap<String, String>();
 
+        // String to store a value from the database
+        String tempString1, tempString2;
 
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + name, null);
+        if(cursor.getCount() > 0) {
+            cursor.moveToLast();
+            tempString1 = cursor.getString(cursor.getColumnIndex(totalGames));
+            stats.put(totalPoints, tempString1);
 
+            tempString1 = cursor.getString(cursor.getColumnIndex(totalAverage));
+            stats.put(totalAverage, tempString1);
+
+            tempString1 = cursor.getString(cursor.getColumnIndex(highScore));
+            stats.put(highScore, tempString1);
+
+            tempString1 = cursor.getString(cursor.getColumnIndex(lowScore));
+            stats.put(lowScore, tempString1);
+
+            tempString1 = cursor.getString(cursor.getColumnIndex(totalPoints));
+            stats.put(totalPoints, tempString1);
+        }
+
+        return stats;
+
+    }
 }

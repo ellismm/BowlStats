@@ -46,10 +46,10 @@ public class addPlayer extends AppCompatActivity {
                     boolean repeat = sh.createTable(newEntry);
                     if(repeat) {
                         addPlayer(newEntry);
+                        txt.setText("");
                     }
                     else {
                         toastMessage("This user already exists");
-                        txt.setText("");
                     }
                 }
                 else
@@ -75,13 +75,13 @@ public class addPlayer extends AppCompatActivity {
             toastMessage("Something went wrong");
     }
 
-        /**
-         * customizable toast
-         * @param message
-         */
-        private void toastMessage(String message){
-            Toast.makeText(this,message, Toast.LENGTH_SHORT).show();
-        }
+    /**
+     * customizable toast
+     * @param message
+     */
+    private void toastMessage(String message){
+        Toast.makeText(this,message, Toast.LENGTH_SHORT).show();
+    }
 
 
 
