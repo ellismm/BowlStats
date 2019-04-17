@@ -19,13 +19,13 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/chooseButton"
+        android:id="@+id/menu"
         android:layout_width="100dp"
         android:layout_height="40dp"
         android:layout_marginStart="155dp"
         android:layout_marginLeft="155dp"
         android:layout_marginBottom="80dp"
-        android:text="Choose"
+        android:text="menu"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 

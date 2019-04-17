@@ -1,23 +1,15 @@
 package com.example.bowlstats;
 
-import android.content.ContentResolver;
+
 import android.content.ContentValues;
-import android.database.CharArrayBuffer;
-import android.database.ContentObserver;
-import android.database.DataSetObserver;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.content.Context;
 
 import java.text.DateFormat;
-import java.text.FieldPosition;
-import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import android.database.Cursor;
-import android.net.Uri;
-import android.os.Bundle;
-import android.os.strictmode.SqliteObjectLeakedViolation;
 import android.util.Log;
 
 public class sqlHelper extends SQLiteOpenHelper {
@@ -40,6 +32,8 @@ public class sqlHelper extends SQLiteOpenHelper {
     private static final String lowScore = "Low_Score";
     private static final String dayPoints = "Day_Points";
     private static final String totalPoints = "Total_Points";
+    private static final String wonToday = "Won_Today";
+    private static final String wonTotal = "Won_Total";
 
 
 
@@ -175,6 +169,7 @@ public class sqlHelper extends SQLiteOpenHelper {
                 values.put(dayPoints, score);
                 values.put(lowScore, score);
                 values.put(highScore, score);
+                values.put(totalAverage, score);
             }
 
             // If this is not the first game for this player
@@ -293,7 +288,7 @@ public class sqlHelper extends SQLiteOpenHelper {
         if(cursor.getCount() > 0) {
             cursor.moveToLast();
             tempString1 = cursor.getString(cursor.getColumnIndex(totalGames));
-            stats.put(totalPoints, tempString1);
+            stats.put(totalGames, tempString1);
 
             tempString1 = cursor.getString(cursor.getColumnIndex(totalAverage));
             stats.put(totalAverage, tempString1);
@@ -309,6 +304,172 @@ public class sqlHelper extends SQLiteOpenHelper {
         }
 
         return stats;
-
     }
+
+    public int getLowScore(String name) {
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + name, null);
+        if(cursor.getCount() > 0) {
+            cursor.moveToLast();
+            int low = cursor.getInt(cursor.getColumnIndex(lowScore));
+            return low;
+        }
+        return -1;
+    }
+
+    public String lowestScore() {
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
+        if(cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            String name, tempName;
+            name = "";
+            int score = 301, tempScore;
+            do {
+                tempName = cursor.getString(0);
+                tempScore = getLowScore(tempName);
+                if(tempScore < score) {
+                    score = tempScore;
+                    name = tempName;
+                }
+            } while(cursor.moveToNext());
+
+            return name;
+        }
+        return null;
+    }
+
+    public int getHighScore(String name) {
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + name, null);
+        if(cursor.getCount() > 0) {
+            cursor.moveToLast();
+            int low = cursor.getInt(cursor.getColumnIndex(lowScore));
+            return low;
+        }
+        return -1;
+    }
+
+    public String highestScore() {
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
+        if(cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            String name, tempName;
+            name = "";
+            int score = 0, tempScore;
+            do {
+                tempName = cursor.getString(0);
+                tempScore = getHighScore(tempName);
+                if(tempScore > score) {
+                    score = tempScore;
+                    name = tempName;
+                }
+            } while(cursor.moveToNext());
+
+            return name;
+        }
+        return null;
+    }
+
+    public float getAverageScore(String name) {
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + name, null);
+        if(cursor.getCount() > 0) {
+            cursor.moveToLast();
+            int low = cursor.getInt(cursor.getColumnIndex(lowScore));
+            return low;
+        }
+        return -1;
+    }
+
+    public String averageScore() {
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
+        if(cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            String name, tempName;
+            name = "";
+            float score = 0f, tempScore;
+            do {
+                tempName = cursor.getString(0);
+                tempScore = getAverageScore(tempName);
+                if(tempScore > score) {
+                    score = tempScore;
+                    name = tempName;
+                }
+            } while(cursor.moveToNext());
+
+            return name;
+        }
+        return null;
+    }
+
+    public int getMostPoints(String name) {
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + name, null);
+        if(cursor.getCount() > 0) {
+            cursor.moveToLast();
+            int low = cursor.getInt(cursor.getColumnIndex(lowScore));
+            return low;
+        }
+        return -1;
+    }
+
+    public String mostPoints() {
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
+        if(cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            String name, tempName;
+            name = "";
+            int score = 0, tempScore;
+            do {
+                tempName = cursor.getString(0);
+                tempScore = getMostPoints(tempName);
+                if(tempScore > score) {
+                    score = tempScore;
+                    name = tempName;
+                }
+            } while(cursor.moveToNext());
+
+            return name;
+        }
+        return null;
+    }
+
+    public int getMostGames (String name) {
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + name, null);
+        if(cursor.getCount() > 0) {
+            cursor.moveToLast();
+            int low = cursor.getInt(cursor.getColumnIndex(lowScore));
+            return low;
+        }
+        return -1;
+    }
+
+    public String mostGames() {
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
+        if(cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            String name, tempName;
+            name = "";
+            int score = 0, tempScore;
+            do {
+                tempName = cursor.getString(0);
+                tempScore = getMostGames(tempName);
+                if(tempScore > score) {
+                    score = tempScore;
+                    name = tempName;
+                }
+            } while(cursor.moveToNext());
+
+            return name;
+        }
+        return null;
+    }
+
+
 }

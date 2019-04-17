@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent myIntent = new Intent(MainActivity.this, choosePlayers.class);
+                myIntent.putExtra("From Main", "To Record");
                 startActivity(myIntent);
             }
         });
@@ -46,7 +47,8 @@ public class MainActivity extends AppCompatActivity {
         viewStats.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myIntent = new Intent(MainActivity.this, statsPage.class);
+                Intent myIntent = new Intent(MainActivity.this, choosePlayers.class);
+                myIntent.putExtra("From Main", "To Stats");
                 startActivity(myIntent);
             }
         });

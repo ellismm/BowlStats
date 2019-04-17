@@ -28,7 +28,7 @@ public class recordStats extends AppCompatActivity {
         score  =findViewById(R.id.score);
 
         Intent oldIntent = getIntent();
-        String message = oldIntent.getStringExtra("playersList");
+        String message = oldIntent.getStringExtra("player");
         nameToRecord.setText(message);
 
         // When clicking the record button
