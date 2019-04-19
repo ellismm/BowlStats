@@ -19,7 +19,7 @@ public class addPlayer extends AppCompatActivity {
 //    if(db == null) {
 //        System.out.println("this database is null");
 //    }
-    private Button menu, add;
+    private Button menu, add, remove;
     private EditText txt;
 
     @Override
@@ -28,6 +28,7 @@ public class addPlayer extends AppCompatActivity {
         setContentView(R.layout.activity_add_player);
         menu = findViewById(R.id.menu);
         add = findViewById(R.id.add);
+        remove = findViewById(R.id.remove);
         txt = findViewById(R.id.name);
         sh = new sqlHelper(this);
 
@@ -54,6 +55,15 @@ public class addPlayer extends AppCompatActivity {
                 }
                 else
                     toastMessage("You must put something in the text field!");
+            }
+        });
+
+        remove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String name = txt.getText().toString();
+                sh.removeTable(name);
+                toastMessage("Player removed!!");
             }
         });
 

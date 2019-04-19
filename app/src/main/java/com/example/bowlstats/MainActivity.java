@@ -1,3 +1,19 @@
+/**
+ * Features to add
+ * the average for the last 4 sessions
+ * Whether it was the left or right lane
+ * Edit the scores
+ * Delete Scores
+ * Drop down for the game number when recording a stat
+ *
+ * April 18
+ * Thu 96, 89, 99
+ * Will 127, 148, 141
+ * Danny 179, 152, 114
+ * Mark 144, 193, 234
+ *
+ */
+
 package com.example.bowlstats;
 
 import android.support.v7.app.AppCompatActivity;

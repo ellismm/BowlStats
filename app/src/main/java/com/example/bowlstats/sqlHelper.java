@@ -17,6 +17,8 @@ public class sqlHelper extends SQLiteOpenHelper {
     private static final String TAG = "DatabaseHelper";
 
     static final String TABLE_NAME = "Names";
+    static final String GAMES_DATE = "Dates";
+    static final String thDate = "Date";
     static final String COL1 = "Name";
 
     private static String NAME_DB;
@@ -45,6 +47,7 @@ public class sqlHelper extends SQLiteOpenHelper {
         String createTable = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "(" +  COL1 + " TEXT " + ")";
 //        String deleteTable = "DROP TABLE IF EXISTS " + TABLE_NAME;
         db.execSQL(createTable);
+        createTable = "CREATE TABLE IF NOT EXISTS " + GAMES_DATE + "(" + theDate + " DATE )";
     }
 
 //    @Override
@@ -87,6 +90,14 @@ public class sqlHelper extends SQLiteOpenHelper {
         return false;
     }
 
+    // TODO: create a function that deletes a player from the database
+    public void removeTable(String name) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("DROP TABLE IF EXISTS " + name);
+        db.execSQL("DELETE FROM " + TABLE_NAME + " WHERE " + COL1 + " = '" + name + "'");
+
+    }
+
     /**
      * This function will add a given name to the Name database
      */
@@ -121,14 +132,13 @@ public class sqlHelper extends SQLiteOpenHelper {
      * @param score
      * @return
      */
-    public boolean recordScore(String name, int score) {
+    public boolean recordScore(String name, int score, String date) {
 
         // Name of the specified persons database;
         NAME_DB = name;
 
         // Initializing temp variables to use throughout
         int tempInt, tempInt2, tempInt3;
-        String tempDate;
         Float tempFloat, tempFloat2;
         long result;
 
@@ -138,26 +148,22 @@ public class sqlHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
 //        SQLiteDatabase db2 = getReadableDatabase();
         ContentValues values = new ContentValues();
+        ContentValues dateValues = new ContentValues();
 
-        DateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = new Date();
-        tempDate = formatDate.format(date);
-        System.out.println(tempDate);
+        dateValues.put(theDate, date);
 
         cursor2 = db.rawQuery("SELECT * FROM " + NAME_DB + " WHERE " + theDate + " = '" +
-                tempDate + "'", null);
+                date + "'", null);
         System.out.println("number of rows in the table: " + cursor2.getCount());
         // If this is the first game of the day
         if(cursor2.getCount() == 0) {
-            values.put(theDate, tempDate);
+            values.put(theDate, date);
             values.put(Game1, score);
             values.put(Game2, -1);
             values.put(Game3, -1);
             values.put(gamesToday, 1);
             values.put(dayAverage,(float) score);
             values.put(dayPoints, score);
-//            tempInt2 = cursor1.getInt(cursor1.getColumnIndex(dayPoints));
-//            tempFloat = cursor1.getFloat(cursor1.getColumnIndex(dayAverage));
 
             // select all the current current rows to see if there is any games played yet
             cursor1 = db.rawQuery(" SELECT * FROM " + NAME_DB, null);
@@ -200,6 +206,7 @@ public class sqlHelper extends SQLiteOpenHelper {
             // insert the new row in the table
             Log.d(TAG, "update Stats: updating the stats after game 1 for the table " + NAME_DB);
             result = db.insert(NAME_DB, null, values);
+            db.insert(GAMES_DATE, null, dateValues);
             if(result == -1)
                 return false;
         }
@@ -265,7 +272,7 @@ public class sqlHelper extends SQLiteOpenHelper {
 
             // update the results in the table
             result = db.update(NAME_DB, values, theDate + " = '"  +
-                    tempDate + "'", null);
+                    date + "'", null);
             if(result == -1)
                 return false;
         }
@@ -306,6 +313,11 @@ public class sqlHelper extends SQLiteOpenHelper {
         return stats;
     }
 
+    /**
+     * Getthe low score column from the last column for the specified player
+     * @param name
+     * @return
+     */
     public int getLowScore(String name) {
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM " + name, null);
@@ -314,9 +326,13 @@ public class sqlHelper extends SQLiteOpenHelper {
             int low = cursor.getInt(cursor.getColumnIndex(lowScore));
             return low;
         }
-        return -1;
+        return 302;
     }
 
+    /**
+     * find the lowest score from all the players
+     * @return
+     */
     public String lowestScore() {
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
@@ -339,17 +355,26 @@ public class sqlHelper extends SQLiteOpenHelper {
         return null;
     }
 
+    /**
+     * Get the highest score column from the last row for the specified player
+     * @param name
+     * @return
+     */
     public int getHighScore(String name) {
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM " + name, null);
         if(cursor.getCount() > 0) {
             cursor.moveToLast();
-            int low = cursor.getInt(cursor.getColumnIndex(lowScore));
+            int low = cursor.getInt(cursor.getColumnIndex(highScore));
             return low;
         }
         return -1;
     }
 
+    /**
+     * Find the player with highest Score
+     * @return
+     */
     public String highestScore() {
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
@@ -372,17 +397,26 @@ public class sqlHelper extends SQLiteOpenHelper {
         return null;
     }
 
+    /**
+     * Get the average score column from the last column for the specified player
+     * @param name
+     * @return
+     */
     public float getAverageScore(String name) {
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM " + name, null);
         if(cursor.getCount() > 0) {
             cursor.moveToLast();
-            int low = cursor.getInt(cursor.getColumnIndex(lowScore));
+            int low = cursor.getInt(cursor.getColumnIndex(totalAverage));
             return low;
         }
         return -1;
     }
 
+    /**
+     * Find the player with the highest average
+     * @return
+     */
     public String averageScore() {
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
@@ -405,17 +439,26 @@ public class sqlHelper extends SQLiteOpenHelper {
         return null;
     }
 
+    /**
+     * Get the most points column in the last row for the specified player
+     * @param name
+     * @return
+     */
     public int getMostPoints(String name) {
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM " + name, null);
         if(cursor.getCount() > 0) {
             cursor.moveToLast();
-            int low = cursor.getInt(cursor.getColumnIndex(lowScore));
+            int low = cursor.getInt(cursor.getColumnIndex(totalPoints));
             return low;
         }
         return -1;
     }
 
+    /**
+     * Find the player with the most points
+     * @return
+     */
     public String mostPoints() {
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
@@ -438,17 +481,26 @@ public class sqlHelper extends SQLiteOpenHelper {
         return null;
     }
 
+    /**
+     * Get the most games column from the last row for the specified player
+     * @param name
+     * @return
+     */
     public int getMostGames (String name) {
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM " + name, null);
         if(cursor.getCount() > 0) {
             cursor.moveToLast();
-            int low = cursor.getInt(cursor.getColumnIndex(lowScore));
+            int low = cursor.getInt(cursor.getColumnIndex(totalGames));
             return low;
         }
         return -1;
     }
 
+    /**
+     * find the player who has played the most games
+     * @return
+     */
     public String mostGames() {
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);

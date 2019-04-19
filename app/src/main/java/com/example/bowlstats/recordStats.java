@@ -9,6 +9,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.content.Intent;
 import android.widget.Toast;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class recordStats extends AppCompatActivity {
@@ -45,8 +48,12 @@ public class recordStats extends AppCompatActivity {
                     }
                 }
                 if(theScore > -1 && theScore <= 300) {
+                    DateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
+                    Date date = new Date();
+                    String tempDate = formatDate.format(date);
+
                     boolean added = sh.recordScore(nameToRecord.getText().toString(),
-                            Integer.parseInt(score.getText().toString()));
+                            Integer.parseInt(score.getText().toString()), tempDate);
 
                     if(added) {
                         toastMessage("Stats successfully updated");
