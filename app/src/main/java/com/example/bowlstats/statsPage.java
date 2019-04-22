@@ -43,6 +43,7 @@ public class statsPage extends AppCompatActivity {
         String thePlayer;
         Intent oldIntent = getIntent();
         thePlayer = oldIntent.getStringExtra("player");
+        sh.winCalculations();
         showStats(thePlayer);
 
         //set the header of the page

@@ -27,7 +27,7 @@ public class editStats extends AppCompatActivity {
     Button home, change;
     Spinner game;
     EditText date, editScore;
-    TextView fromScore;
+    TextView fromScore, fromText;
     int tempInt;
 
     @Override
@@ -41,6 +41,7 @@ public class editStats extends AppCompatActivity {
         date = findViewById(R.id.datePicker);
         editScore = findViewById((R.id.editScore));
         fromScore = findViewById(R.id.scoreText);
+        fromText = findViewById(R.id.fromText);
 
         // initialize the EditText field to the current date
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -59,7 +60,7 @@ public class editStats extends AppCompatActivity {
         final String name = oldIntent.getStringExtra("player");
 
         // Get the score for game 1 for the current date if it exists
-        tempInt = sh.getGameTwo(name, theDate);
+        tempInt = sh.getGameOneScore(name, theDate);
         fromScore.setText(Integer.toString(tempInt));
 
         // Clicking on the home button
@@ -128,18 +129,18 @@ public class editStats extends AppCompatActivity {
                 String item = (String) parent.getItemAtPosition(pos);
                 int scoreInt;
                 if(item.equals("Game 1")) {
-                    scoreInt = sh.getGameOne(name, date.getText().toString());
+                    scoreInt = sh.getGameOneScore(name, date.getText().toString());
                     System.out.println("scoreInt: " + scoreInt);
                     fromScore.setText(Integer.toString(scoreInt));
                     toastMessage("Game 1 " + date.getText().toString());
                 }
                 else if(item.equals("Game 2")) {
-                    scoreInt = sh.getGameTwo(name, date.getText().toString());
+                    scoreInt = sh.getGameTwoScore(name, date.getText().toString());
                     fromScore.setText(Integer.toString(scoreInt));
                     toastMessage("Game 2 " + date.getText().toString());
                 }
                 else if(item.equals("Game 3")) {
-                    scoreInt = sh.getGameThree(name, date.getText().toString());
+                    scoreInt = sh.getGameThreeScore(name, date.getText().toString());
                     fromScore.setText(Integer.toString(scoreInt));
                     toastMessage("Game 3 " + date.getText().toString());
                 }

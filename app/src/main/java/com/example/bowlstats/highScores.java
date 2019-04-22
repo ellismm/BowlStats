@@ -131,7 +131,7 @@ public class highScores extends AppCompatActivity {
         gameTwo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                name = sh.averageScoreGameOne();
+                name = sh.averageScoreGameTwo();
                 score2 = sh.getAverageScoreGameTwo(name);
                 message.setText("\n\n" + name + " has a Game 2 average of: \n" + score2);
             }
@@ -141,8 +141,8 @@ public class highScores extends AppCompatActivity {
         gameThree.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                name = sh.averageScoreGameOne();
-                score2 = sh.getAverageScoreGameTwo(name);
+                name = sh.averageScoreGameThree();
+                score2 = sh.getAverageScoreGameThree(name);
                 message.setText("\n\n" + name + " has a Game 3 average of: \n" + score2);
             }
         });

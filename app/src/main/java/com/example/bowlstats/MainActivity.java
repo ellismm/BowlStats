@@ -1,9 +1,6 @@
 /**
  * Features to add
- * the average for the last 4 sessions
  * Whether it was the left or right lane
- * Get the sum of each game
- * number of games won
  *
  * April 18
  * Thu 96, 89, 99
