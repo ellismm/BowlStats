@@ -10,9 +10,10 @@
         android:id="@+id/addPlayer"
         android:layout_width="316dp"
         android:layout_height="68dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="208dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="100dp"
+        android:background="@color/colorAccent"
         android:text="Add a new player"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -21,33 +22,42 @@
         android:id="@+id/record"
         android:layout_width="316dp"
         android:layout_height="68dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginLeft="40dp"
         android:layout_marginTop="16dp"
+        android:background="@color/colorPrimary"
         android:text="Record new game stats"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/addPlayer"
         app:layout_constraintTop_toBottomOf="@+id/addPlayer" />
 
     <Button
-        android:id="@+id/editStats"
+        android:id="@+id/highScore"
         android:layout_width="316dp"
         android:layout_height="68dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginLeft="40dp"
         android:layout_marginTop="16dp"
-        android:text="Edit game scores"
-        app:layout_constraintStart_toStartOf="parent"
+        android:background="@color/design_default_color_primary"
+        android:text="High Scores"
+        app:layout_constraintStart_toStartOf="@+id/record"
         app:layout_constraintTop_toBottomOf="@+id/record" />
 
     <Button
         android:id="@+id/viewStats"
         android:layout_width="316dp"
         android:layout_height="68dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginLeft="40dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp"
+        android:background="@color/colorPrimaryDark"
         android:text="View stats"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editStats" />
+        app:layout_constraintStart_toStartOf="@id/highScore"
+        app:layout_constraintTop_toBottomOf="@+id/highScore" />
+
+    <Button
+        android:id="@+id/editStats"
+        android:layout_width="316dp"
+        android:layout_height="68dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/design_default_color_primary_dark"
+        android:text="Edit Stats"
+        app:layout_constraintStart_toStartOf="@+id/viewStats"
+        app:layout_constraintTop_toBottomOf="@+id/viewStats" />
 
 </android.support.constraint.ConstraintLayout>

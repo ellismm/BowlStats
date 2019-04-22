@@ -24,6 +24,10 @@ public class statsPage extends AppCompatActivity {
     private static final String highScore = "High_Score";
     private static final String lowScore = "Low_Score";
     private static final String totalPoints = "Total_Points";
+    private static final String wonTotal = "Won_Total";
+    private static final String gameOneAverage = "Game_One_Average";
+    private static final String gameTwoAverage = "Game_Two_Average";
+    private static final String gameThreeAverage = "Game_Three_Average";
     sqlHelper sh = new sqlHelper(this);
 
 
@@ -57,6 +61,7 @@ public class statsPage extends AppCompatActivity {
     public void showStats(String player) {
         final ArrayList<String> playerStats = new ArrayList<>();
         pStats = sh.getStats(player);
+        sh.winCalculations();
         theStats = findViewById(R.id.theStats);
         String temp;
 
@@ -74,6 +79,21 @@ public class statsPage extends AppCompatActivity {
         playerStats.add(temp);
 
         temp = "High Score: " + pStats.get(highScore);
+        playerStats.add(temp);
+
+        temp = "Games Won: " + pStats.get(wonTotal);
+        playerStats.add(temp);
+
+        temp = "Game 1 Average: " + pStats.get(gameOneAverage);
+        playerStats.add(temp);
+
+        temp = "Game 2 Average: " + pStats.get(gameTwoAverage);
+        playerStats.add(temp);
+
+        temp = "Game 3 Average: " + pStats.get(gameThreeAverage);
+        playerStats.add(temp);
+
+        temp = "Last 4 Sessions Average: " + sh.lastFour(player);
         playerStats.add(temp);
 
         ListAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, playerStats);

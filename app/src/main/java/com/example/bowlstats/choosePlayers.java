@@ -84,6 +84,13 @@ public class choosePlayers extends AppCompatActivity {
                     startActivity(intent);
                 }
 
+                // Direct to the edit stats page
+                else if(direct.equals("To Edit")) {
+                    intent = new Intent(choosePlayers.this, editStats.class);
+                    intent.putExtra("player", nameToRecord);
+                    startActivity(intent);
+                }
+
                 else
                     System.out.println("This did not work");
 

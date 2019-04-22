@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".choosePlayers"></activity>
+        <activity android:name=".highScores"></activity>
+        <activity android:name=".choosePlayers" />
         <activity android:name=".editStats" />
         <activity android:name=".addPlayer" />
         <activity android:name=".recordStats" />
