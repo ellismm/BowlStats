@@ -19,11 +19,12 @@
 
     <TextView
         android:id="@+id/name"
-        android:layout_width="150dp"
+        android:layout_width="165dp"
         android:layout_height="48dp"
-        android:layout_marginStart="46dp"
-        android:layout_marginLeft="46dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginLeft="30dp"
         android:layout_marginTop="225dp"
+        android:gravity="center_vertical"
         android:text="Name: "
         android:textSize="28dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -32,7 +33,7 @@
     <EditText
         android:id="@+id/score"
         android:layout_width="89dp"
-        android:layout_height="41dp"
+        android:layout_height="48dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:ems="10"
@@ -48,8 +49,33 @@
         android:layout_marginLeft="120dp"
         android:layout_marginTop="50dp"
         android:text="Game Score"
-        android:textSize="30sp"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/datePicker"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="50dp"
+        android:ems="10"
+        android:inputType="date"
+        app:layout_constraintStart_toEndOf="@+id/textDate"
+        app:layout_constraintTop_toBottomOf="@+id/gameScoreHeader" />
+
+    <TextView
+        android:id="@+id/textDate"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginLeft="50dp"
+        android:gravity="center"
+        android:textSize="28dp"
+        android:text="Date:"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/datePicker" />
+
 
 </android.support.constraint.ConstraintLayout>

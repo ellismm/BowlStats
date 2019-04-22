@@ -2,9 +2,8 @@
  * Features to add
  * the average for the last 4 sessions
  * Whether it was the left or right lane
- * Edit the scores
- * Delete Scores
- * Drop down for the game number when recording a stat
+ * Get the sum of each game
+ * number of games won
  *
  * April 18
  * Thu 96, 89, 99
@@ -25,7 +24,7 @@ import android.content.Intent;
 import java.time.chrono.MinguoChronology;
 
 public class MainActivity extends AppCompatActivity {
-    private Button add_player, record, stats, viewStats;
+    private Button add_player, record, stats, viewStats, highScores;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         record = findViewById(R.id.record);
         stats = findViewById(R.id.editStats);
         viewStats = findViewById((R.id.viewStats));
+        highScores = findViewById(R.id.highScore);
 
         add_player.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,7 +55,8 @@ public class MainActivity extends AppCompatActivity {
         stats.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myIntent = new Intent(MainActivity.this, editStats.class);
+                Intent myIntent = new Intent(MainActivity.this, choosePlayers.class);
+                myIntent.putExtra("From Main", "To Edit");
                 startActivity(myIntent);
             }
         });
@@ -65,6 +66,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent myIntent = new Intent(MainActivity.this, choosePlayers.class);
                 myIntent.putExtra("From Main", "To Stats");
+                startActivity(myIntent);
+            }
+        });
+
+        highScores.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(MainActivity.this, highScores.class);
                 startActivity(myIntent);
             }
         });
