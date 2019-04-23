@@ -195,7 +195,7 @@ public class sqlHelper extends SQLiteOpenHelper {
                 values.put(dayPoints, score);
                 values.put(lowScore, score);
                 values.put(highScore, score);
-                values.put(totalAverage, score);
+                values.put(totalAverage, (float) score);
                 values.put(gameOneGames, 1);
                 values.put(gameOnePoints, score);
                 values.put(gameOneAverage, (float) score);

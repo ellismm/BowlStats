@@ -41,7 +41,6 @@ public class editStats extends AppCompatActivity {
         date = findViewById(R.id.datePicker);
         editScore = findViewById((R.id.editScore));
         fromScore = findViewById(R.id.scoreText);
-        fromText = findViewById(R.id.fromText);
 
         // initialize the EditText field to the current date
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
