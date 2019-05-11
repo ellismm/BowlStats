@@ -8,6 +8,18 @@
  * Danny 179, 152, 114
  * Mark 144, 193, 234
  *
+ * April 25
+ * Thu 91, 90, 101
+ * Will 153, 156, 199
+ * Danny 158, 146, 164
+ * Mark 127, 139, 173
+ *
+ * May 2
+ * Thu 108, 84, 74
+ * Will 197, 160, 154
+ * Danny 103, 119, 162
+ * Mark 185, 147, 196,
+ *
  */
 
 package com.example.bowlstats;
