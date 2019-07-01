@@ -91,6 +91,7 @@ public class sqlHelper extends SQLiteOpenHelper {
                 name + "'", null);
         if(cursor != null) {
             if(cursor.getCount() == 1) {
+                cursor.close();
                 return false;
             }
             String createTable = " CREATE TABLE IF NOT EXISTS " + NAME_DB + "(" + theDate + " DATE, " +
@@ -103,8 +104,11 @@ public class sqlHelper extends SQLiteOpenHelper {
                     " BIGINT, " + gameThreePoints + " BIGINT, " + gameOneAverage + " FLOAT, " +
                     gameTwoAverage + " FLOAT, " + gameThreeAverage + " FLOAT " + ") ";
             db.execSQL(createTable);
+            cursor.close();
             return true;
         }
+
+        cursor.close();
         return false;
     }
 
@@ -272,8 +276,11 @@ public class sqlHelper extends SQLiteOpenHelper {
             Log.d(TAG, "update Stats: updating the stats after game 1 for the table " + NAME_DB);
             result = db.insert(NAME_DB, null, values);
             db.insert(GAMES_DATE, null, dateValues);
-            if(result == -1)
+            if(result == -1) {
+                cursor1.close();
+                cursor2.close();
                 return false;
+            }
         }
 
         // If this is the not the first game of the Day
@@ -326,6 +333,8 @@ public class sqlHelper extends SQLiteOpenHelper {
                 values.put(gameThreeAverage, (float) tempInt2 / (float) tempInt);
             }
             else if(intTemp2 > -1) {
+                cursor1.close();
+                cursor1.close();
                 return false;
             }
 
@@ -364,9 +373,14 @@ public class sqlHelper extends SQLiteOpenHelper {
             // update the results in the table
             result = db.update(NAME_DB, values, theDate + " = '"  +
                     date + "'", null);
-            if(result == -1)
+            if(result == -1) {
+                cursor1.close();
+                cursor2.close();
                 return false;
+            }
         }
+
+        cursor2.close();
         return true;
     }
 
@@ -413,6 +427,7 @@ public class sqlHelper extends SQLiteOpenHelper {
             stats.put(gameThreeAverage, tempString1);
         }
 
+        cursor.close();
         return stats;
     }
 
@@ -427,6 +442,7 @@ public class sqlHelper extends SQLiteOpenHelper {
         if(cursor.getCount() > 0) {
             cursor.moveToLast();
             int low = cursor.getInt(cursor.getColumnIndex(lowScore));
+            cursor.close();
             return low;
         }
         return 302;
@@ -453,8 +469,11 @@ public class sqlHelper extends SQLiteOpenHelper {
                 }
             } while(cursor.moveToNext());
 
+            cursor.close();
             return name;
         }
+
+        cursor.close();
         return null;
     }
 
@@ -469,8 +488,10 @@ public class sqlHelper extends SQLiteOpenHelper {
         if(cursor.getCount() > 0) {
             cursor.moveToLast();
             int low = cursor.getInt(cursor.getColumnIndex(highScore));
+            cursor.close();
             return low;
         }
+        cursor.close();
         return -1;
     }
 
@@ -495,8 +516,10 @@ public class sqlHelper extends SQLiteOpenHelper {
                 }
             } while(cursor.moveToNext());
 
+            cursor.close();
             return name;
         }
+        cursor.close();
         return null;
     }
 
@@ -511,8 +534,10 @@ public class sqlHelper extends SQLiteOpenHelper {
         if(cursor.getCount() > 0) {
             cursor.moveToLast();
             float low = cursor.getInt(cursor.getColumnIndex(column));
+            cursor.close();
             return low;
         }
+        cursor.close();
         return -1;
     }
 
@@ -574,8 +599,11 @@ public class sqlHelper extends SQLiteOpenHelper {
                 }
             } while(cursor.moveToNext());
 
+            cursor.close();
             return name;
         }
+
+        cursor.close();
         return null;
     }
 
@@ -600,8 +628,11 @@ public class sqlHelper extends SQLiteOpenHelper {
                 }
             } while(cursor.moveToNext());
 
+            cursor.close();
             return name;
         }
+
+        cursor.close();
         return null;
     }
 
@@ -626,8 +657,11 @@ public class sqlHelper extends SQLiteOpenHelper {
                 }
             } while(cursor.moveToNext());
 
+            cursor.close();
             return name;
         }
+
+        cursor.close();
         return null;
     }
 
@@ -652,8 +686,11 @@ public class sqlHelper extends SQLiteOpenHelper {
                 }
             } while(cursor.moveToNext());
 
+            cursor.close();
             return name;
         }
+
+        cursor.close();
         return null;
     }
 
@@ -668,8 +705,12 @@ public class sqlHelper extends SQLiteOpenHelper {
         if(cursor.getCount() > 0) {
             cursor.moveToLast();
             int low = cursor.getInt(cursor.getColumnIndex(totalPoints));
+
+            cursor.close();
             return low;
         }
+
+        cursor.close();
         return -1;
     }
 
@@ -694,8 +735,11 @@ public class sqlHelper extends SQLiteOpenHelper {
                 }
             } while(cursor.moveToNext());
 
+            cursor.close();
             return name;
         }
+
+        cursor.close();
         return null;
     }
 
@@ -710,8 +754,12 @@ public class sqlHelper extends SQLiteOpenHelper {
         if(cursor.getCount() > 0) {
             cursor.moveToLast();
             int low = cursor.getInt(cursor.getColumnIndex(totalGames));
+
+            cursor.close();
             return low;
         }
+
+        cursor.close();
         return -1;
     }
 
@@ -736,8 +784,11 @@ public class sqlHelper extends SQLiteOpenHelper {
                 }
             } while(cursor.moveToNext());
 
+            cursor.close();
             return name;
         }
+
+        cursor.close();
         return null;
     }
 
@@ -754,8 +805,12 @@ public class sqlHelper extends SQLiteOpenHelper {
         if(cursor.getCount() > 0) {
             cursor.moveToLast();
             int score = cursor.getInt(cursor.getColumnIndex(Game1));
+
+            cursor.close();
             return score;
         }
+
+        cursor.close();
         return -1;
     }
 
@@ -772,9 +827,13 @@ public class sqlHelper extends SQLiteOpenHelper {
         if(cursor.getCount() > 0) {
             cursor.moveToLast();
             int score = cursor.getInt(cursor.getColumnIndex(Game2));
-            System.out.println("The score of game 2 has not been recorded: " + score);
+//            System.out.println("The score of game 2 has not been recorded: " + score);
+
+            cursor.close();
             return score;
         }
+
+        cursor.close();
         return -1;
     }
 
@@ -791,8 +850,12 @@ public class sqlHelper extends SQLiteOpenHelper {
         if(cursor.getCount() > 0) {
             cursor.moveToLast();
             int score = cursor.getInt(cursor.getColumnIndex(Game3));
+
+            cursor.close();
             return score;
         }
+
+        cursor.close();
         return -1;
     }
 
@@ -816,10 +879,12 @@ public class sqlHelper extends SQLiteOpenHelper {
 
         }
         reEvaluateTable(name);
+
+        cursor.close();
     }
 
     /**
-     * If a score is changed the all the other columns should be reEvaluated
+     * If a score is changed then all the other columns should be reEvaluated
      * @param name
      */
     public void reEvaluateTable(String name) {
@@ -944,6 +1009,8 @@ public class sqlHelper extends SQLiteOpenHelper {
             } while(cursor.moveToNext());
         }
         System.out.println("This table was successfully re-evaluated");
+
+        cursor.close();
     }
 
     /**
@@ -974,6 +1041,9 @@ public class sqlHelper extends SQLiteOpenHelper {
                 updateWonTotal(name);
             } while(name_cursor.moveToNext());
         }
+
+        date_cursor.close();
+        name_cursor.close();
     }
 
     /**
@@ -1029,6 +1099,8 @@ public class sqlHelper extends SQLiteOpenHelper {
                     winner_three = tempName;
                 }
             }
+
+            data_cursor.close();
         } while(name_cursor.moveToNext());
 
         // Update the winner for the first game on the specified date
@@ -1064,6 +1136,8 @@ public class sqlHelper extends SQLiteOpenHelper {
             values3.put(wonToday, tempScore);
             db.update(winner_three, values3, theDate + " = '" + date + "'", null);
         }
+
+        tempCursor.close();
     }
 
     /**
@@ -1091,6 +1165,8 @@ public class sqlHelper extends SQLiteOpenHelper {
                 db.update(name, values, theDate + " = '" + date + "'", null);
             } while(cursor.moveToNext());
         }
+
+        cursor.close();
     }
 
     /**
@@ -1111,9 +1187,12 @@ public class sqlHelper extends SQLiteOpenHelper {
         if(cursor.getCount() > 0) {
             cursor.moveToFirst();
             won = cursor.getInt(cursor.getColumnIndex(wonToday));
+
+            cursor.close();
             return won;
         }
 
+        cursor.close();
         return -1;
     }
 
@@ -1135,10 +1214,13 @@ public class sqlHelper extends SQLiteOpenHelper {
         if(cursor.getCount() > 0) {
             cursor.moveToFirst();
             won = cursor.getInt(cursor.getColumnIndex(wonTotal));
+
+            cursor.close();
             return won;
         }
 
         // Player has not played any games on the specified date
+        cursor.close();
         return -1;
     }
 
@@ -1157,10 +1239,12 @@ public class sqlHelper extends SQLiteOpenHelper {
         if(data_cursor.getCount() > 0) {
             data_cursor.moveToLast();
             int won = data_cursor.getInt(data_cursor.getColumnIndex(wonTotal));
+            data_cursor.close();
             return won;
         }
 
         // If this player hasn't played any games
+        data_cursor.close();
         return -1;
     }
 
@@ -1188,11 +1272,13 @@ public class sqlHelper extends SQLiteOpenHelper {
                 }
             } while(name_cursor.moveToNext());
 
+            name_cursor.close();
             return winner;
         }
 
         // If there are no names in the database then there are now winners
-       return null;
+        name_cursor.close();
+        return null;
     }
 
     /**
@@ -1221,10 +1307,13 @@ public class sqlHelper extends SQLiteOpenHelper {
 
             // Calculate and return the average
             average = (float) points / (float) games;
+
+            cursor.close();
             return average;
         }
 
         // This player has not played any games yet
+        cursor.close();
         return -1;
     }
 
@@ -1254,10 +1343,12 @@ public class sqlHelper extends SQLiteOpenHelper {
             } while(cursor.moveToNext());
 
             // Return the winner
+            cursor.close();
             return winner;
         }
 
         // There are no players in the database
+        cursor.close();
         return null;
 
     }

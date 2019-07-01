@@ -57,6 +57,7 @@ public class choosePlayers extends AppCompatActivity {
             players.add(player.getString(0));
 
         }
+        player.close();
 
         // create the list adapter and set the adapter
         ListAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, players);
