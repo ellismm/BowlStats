@@ -46,7 +46,7 @@ public class choosePlayers extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        Log.d(TAG, "viewNames: Displaying players in the data base");
+        Log.d(TAG, "viewNames: Displaying playerssss in the data base");
 
         //get the data and append to a list
         Cursor player = sh.getPlayers();
