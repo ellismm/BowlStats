@@ -129,4 +129,80 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <EditText
+        android:id="@+id/split"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:text="0"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintStart_toEndOf="@+id/split_minus"
+        app:layout_constraintTop_toTopOf="@+id/home" />
+
+    <Button
+        android:id="@+id/split_minus"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="5dp"
+        android:paddingBottom="6dp"
+        android:paddingRight="6dp"
+        android:text="-"
+        app:layout_constraintStart_toEndOf="@+id/home"
+        app:layout_constraintTop_toTopOf="@+id/home" />
+
+    <Button
+        android:id="@+id/split_plus"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:paddingBottom="6dp"
+        android:paddingRight="6dp"
+        android:text="+"
+        app:layout_constraintStart_toEndOf="@+id/split"
+        app:layout_constraintTop_toTopOf="@+id/split" />
+
+    <Button
+        android:id="@+id/weeks_minus"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:paddingBottom="6dp"
+        android:paddingRight="6dp"
+        android:text="-"
+        app:layout_constraintEnd_toStartOf="@+id/weeks_left"
+        app:layout_constraintTop_toTopOf="@+id/weeks_left" />
+
+    <Button
+        android:id="@+id/weeks_plus"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:paddingBottom="6dp"
+        android:paddingRight="6dp"
+        android:text="+"
+        app:layout_constraintEnd_toStartOf="@+id/home"
+        app:layout_constraintTop_toTopOf="@+id/home" />
+
+    <EditText
+        android:id="@+id/weeks_left"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="5dp"
+        android:text="0"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintEnd_toStartOf="@+id/weeks_plus"
+        app:layout_constraintTop_toTopOf="@+id/home" />
+
 </android.support.constraint.ConstraintLayout>

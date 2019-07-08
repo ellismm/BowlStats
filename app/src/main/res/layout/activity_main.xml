@@ -8,56 +8,61 @@
 
     <Button
         android:id="@+id/addPlayer"
-        android:layout_width="316dp"
-        android:layout_height="68dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="100dp"
-        android:background="@color/colorAccent"
+        android:layout_width="170dp"
+        android:layout_height="170dp"
+        android:layout_marginStart="85dp"
+        android:layout_marginLeft="85dp"
+        android:background="@drawable/button_round"
+        android:backgroundTint="@color/colorAccent"
         android:text="Add new player"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/record"
-        android:layout_width="316dp"
-        android:layout_height="68dp"
-        android:layout_marginTop="16dp"
-        android:background="@color/colorPrimary"
-        android:text="Record new game stats"
-        app:layout_constraintStart_toStartOf="@+id/addPlayer"
-        app:layout_constraintTop_toBottomOf="@+id/addPlayer" />
-
-    <Button
-        android:id="@+id/highScore"
-        android:layout_width="316dp"
-        android:layout_height="68dp"
-        android:layout_marginTop="16dp"
-        android:background="@color/design_default_color_primary"
-        android:text="High Scores"
         app:layout_constraintStart_toStartOf="@+id/record"
         app:layout_constraintTop_toBottomOf="@+id/record" />
 
     <Button
+        android:id="@+id/record"
+        android:layout_width="170dp"
+        android:layout_height="170dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="18dp"
+        android:background="@drawable/button_round"
+        android:backgroundTint="@color/colorPrimary"
+        android:text="Record new game stats"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/highScore"
+        android:layout_width="170dp"
+        android:layout_height="170dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:background="@drawable/button_round"
+        android:backgroundTint="@color/design_default_color_primary"
+        android:text="High Scores"
+        app:layout_constraintStart_toEndOf="@+id/record"
+        app:layout_constraintTop_toTopOf="@+id/record" />
+
+    <Button
         android:id="@+id/viewStats"
-        android:layout_width="316dp"
-        android:layout_height="68dp"
-        android:layout_marginStart="0dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="10dp"
-        android:background="@color/colorPrimaryDark"
+        android:layout_width="170dp"
+        android:layout_height="170dp"
+        android:background="@drawable/button_round"
+        android:backgroundTint="@color/colorPrimaryDark"
         android:text="View stats"
-        app:layout_constraintStart_toStartOf="@id/highScore"
-        app:layout_constraintTop_toBottomOf="@+id/highScore" />
+        app:layout_constraintStart_toStartOf="@+id/record"
+        app:layout_constraintTop_toBottomOf="@+id/addPlayer" />
 
     <Button
         android:id="@+id/editStats"
-        android:layout_width="316dp"
-        android:layout_height="68dp"
-        android:layout_marginTop="10dp"
-        android:background="@color/design_default_color_primary_dark"
+        android:layout_width="170dp"
+        android:layout_height="170dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:background="@drawable/button_round"
+        android:backgroundTint="@color/design_default_color_primary_dark"
         android:text="Edit Stats"
-        app:layout_constraintStart_toStartOf="@+id/viewStats"
-        app:layout_constraintTop_toBottomOf="@+id/viewStats" />
+        app:layout_constraintStart_toEndOf="@+id/viewStats"
+        app:layout_constraintTop_toTopOf="@+id/viewStats" />
 
 </android.support.constraint.ConstraintLayout>
